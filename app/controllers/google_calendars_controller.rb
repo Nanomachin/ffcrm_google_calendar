@@ -50,7 +50,7 @@ class GoogleCalendarsController < ApplicationController
     end
 
     def primary_calendar_id(calendar_entries)
-      calendar_entries.select{|cal| cal.primary == true }.first
+      calendar_entries.select{|cal| cal.primary == true }.first.id
     end
 
 end
