@@ -31,8 +31,8 @@ class GoogleCalendarsController < ApplicationController
 
     def calendar_list
       @calendar_list ||= Google::CalendarList.new({
-        client_id: Setting.google_calendar_client_id,
-        client_secret: Setting.google_calendar_client_secret,
+        client_id: Setting.google_calendar_api_client_id,
+        client_secret: Setting.google_calendar_api_client_secret,
         redirect_url: google_calendars_auth_redirect_url
       })
 
@@ -46,6 +46,8 @@ class GoogleCalendarsController < ApplicationController
 
       #reject calendar entries with ids from the blacklist
       @calendar_entries.reject!{|entry| Setting.google_calendar_blacklist_ids.any?{|black| entry.id.include? black}}
+
+      @calendar_entries.sort!{|a, b| a.summary.downcase <=> b.summary.downcase}
 
     end
 
